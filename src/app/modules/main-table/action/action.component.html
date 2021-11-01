@@ -1,0 +1,27 @@
+<div class="box-container-action">
+    <p>
+        Action:
+        {{actionType}}
+    </p>
+
+    <div class="box-dices">
+       <div class="d-flex justify-content-center align-items-center h-100">
+            <img [src]="dice_1" class="responsive-image mx-2" style="max-width: 40px;" width="72" height="72" alt="">
+            <img *ngIf="hasDice_2" [src]="dice_2" class="responsive-image mx-2" style="max-width: 40px;" width="72" height="72" alt="">
+            <img *ngIf="hasDice_3" [src]="dice_3" class="responsive-image mx-2" style="max-width: 40px;" width="72" height="72" alt="">
+        </div>
+    </div>
+
+    <div class="dice-qty">
+      <div (click)="setDices(1)">1</div>
+      <div (click)="setDices(2)">2</div>
+      <div (click)="setDices(3)">3</div>
+    </div>
+
+    <div class="box-action">
+        <button class="btn btn-primary btn-block" (click)="pushAction(actionType)" [disabled]="isDisabledButton" style="min-height: 50px;">
+            {{actionType === 'attack' ? 'Atacar' : 'Defesa'}}
+        </button>
+    </div>
+</div>
+

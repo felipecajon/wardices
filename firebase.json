@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "site": "war-dices",
+    "public": "dist/warDices",
+    "ignore": [
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+.fix-border-radius {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+.date-picker-custom .dropdown-menu {
+    right: 0;
+    left: unset !important;
+}
+
+$border-radius-size: 8px;
+
+.form-group-custom {
+    border: 1px solid;
+    border-radius: $border-radius-size;
+    position: relative;
+    
+    label {
+        background-color: #000;
+        color: #fff;
+        padding: 4px;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-top-right-radius: $border-radius-size;
+        border-top-left-radius: $border-radius-size;
+
+        svg {
+            display: flex;
+            margin-left: 8px;
+        }
+    }
+    
+    .container-input-custom {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        overflow: hidden;
+        position: relative;
+        
+        input {
+            border: 0;
+            outline: 0;
+            width: 100%;
+            text-align: center;
+            height: 40px;
+
+            &:first-child {
+                border-bottom-left-radius: $border-radius-size;
+            }
+            
+            &:last-of-type {
+                padding-right: 30px;
+                border-bottom-right-radius: $border-radius-size;
+            }
+        }
+        
+        div {
+            display: block;
+            width: 4px;
+            background: #000;
+            transform: rotate(20deg) scale(1.2) translateX(-50%);
+        }
+        
+        button {
+            position: absolute;
+            right: 0;
+            height: 50%;
+            border: 0;
+            outline: 0;
+            box-shadow: none;
+            border-radius: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            &.btn-up {
+                top: 0;
+            }
+
+            &.btn-down {
+                bottom: 0;
+                border-bottom-right-radius: $border-radius-size;
+            }
+        }
+    }
+}

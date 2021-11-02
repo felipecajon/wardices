@@ -15,6 +15,7 @@ import { LampComponent } from './lamp/lamp.component';
 import { FightComponent } from './fight/fight.component';
 import { EqualComponent } from './equal/equal.component';
 import { RefreshComponent } from './refresh/refresh.component';
+import { CloseComponent } from './close/close.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RefreshComponent } from './refresh/refresh.component';
     LampComponent,
     FightComponent,
     EqualComponent,
-    RefreshComponent
+    RefreshComponent,
+    CloseComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +54,8 @@ import { RefreshComponent } from './refresh/refresh.component';
     LampComponent,
     FightComponent,
     EqualComponent,
-    RefreshComponent
+    RefreshComponent,
+    CloseComponent
   ]
 })
 

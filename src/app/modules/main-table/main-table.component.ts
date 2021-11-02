@@ -1,24 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MainTableService} from './main-table.service';
 
-@Component({
-  selector: 'app-main-table',
-  templateUrl: './main-table.component.html',
-  styleUrls: ['./main-table.component.scss']
-})
+@Component({selector: 'app-main-table', templateUrl: './main-table.component.html', styleUrls: ['./main-table.component.scss']})
 
 export class MainTableComponent implements OnInit {
-  statusTable: string = '';
-  action_01: string = 'defese';
-  action_02: string = 'attack';
+    statusTable : string = '';
+    action_01 : string = 'defese';
+    action_02 : string = 'attack';
 
-  constructor() { }
+    constructor(private tableService : MainTableService) {}
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
 
-  invertTable () {
-    // this.action_01 = this.action_01 === 'attack' ? 'defese' : 'attack';
-    // this.action_02 = this.action_01 === 'attack' ? 'defese' : 'attack';
-    this.statusTable = this.statusTable === '' ? 'inverted' : '';
-  }
+    }
+
+    invertTable() {
+        this.statusTable = this.statusTable === '' ? 'inverted' : '';
+    }
+
+    resetTable() {
+        this.tableService.resetTable();
+    }
 }
+

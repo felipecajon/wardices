@@ -1,15 +1,25 @@
 <div class="container-main-table {{statusTable}}">
-    <section class="container-box-action">
-        <app-action actionType="{{action_01}}"></app-action>
-    </section>
+  <section class="container-box-action">
+    <app-action actionType="{{action_01}}"></app-action>
+  </section>
 
-	<section class="container-mid-game d-flex justify-content-center">
+  <section class="container-mid-game d-flex justify-content-center">
+    <div class="row w-100 h-100 align-items-center">
+      <div class="col-6">
         <button class="btn btn-block btn-primary my-2" (click)="invertTable()">
-            <app-refresh size="20"></app-refresh>
+          <app-refresh size="20"></app-refresh>
         </button>
-    </section>
+      </div>
 
-    <section class="container-box-action">
-        <app-action actionType="{{action_02}}"></app-action>
-    </section>
+      <div class="col-6">
+        <button class="btn btn-block btn-primary my-2" (click)="resetTable()">
+          Reset
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-box-action">
+    <app-action actionType="{{action_02}}"></app-action>
+  </section>
 </div>

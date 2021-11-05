@@ -17,8 +17,8 @@ export class ActionComponent implements OnInit {
     isDisabledButton : boolean = false;
 
 
+    hasDice_1 : boolean = true;
     hasDice_2 : boolean = true;
-    hasDice_3 : boolean = true;
 
     dice_1 : string = dice_face_0;
     dice_2 : string = dice_face_0;
@@ -27,6 +27,7 @@ export class ActionComponent implements OnInit {
     status_dice_1 : string = '';
     status_dice_2 : string = '';
     status_dice_3 : string = '';
+    qtyDices : Number = 3;
 
     diceFace : Array < string > = [
         dice_face_1,
@@ -77,15 +78,9 @@ export class ActionComponent implements OnInit {
 
         diceValues.sort();
 
-        if (this.actionType === 'attack') {
-            this.dice_1 = diceValues[2];
-            this.dice_2 = diceValues[1];
-            this.dice_3 = diceValues[0];
-        } else {
-            this.dice_1 = diceValues[0];
-            this.dice_2 = diceValues[1];
-            this.dice_3 = diceValues[2];
-        }
+        this.dice_1 = diceValues[0];
+        this.dice_2 = diceValues[1];
+        this.dice_3 = diceValues[2];
 
         const mappedDices = [
             result_1 + 1,
@@ -93,26 +88,19 @@ export class ActionComponent implements OnInit {
             result_3 + 1
         ].sort();
 
-        last && this.tableService.testDices({actionType: this.actionType, diceValues: mappedDices});
+        last && this.tableService.testDices({actionType: this.actionType, diceValues: mappedDices, qtyDices: this.qtyDices});
     }
 
     setDices(qty : Number) {
+        this.hasDice_1 = qty === 3;
         this.hasDice_2 = qty >= 2;
-        this.hasDice_3 = qty >= 3;
+        this.qtyDices = qty;
     }
 
     testDices(round : any) {
-        if (this.actionType === 'attack') {
-            this.status_dice_1 = round.attack.resultRound[0].toString();
-            this.status_dice_2 = round.attack.resultRound[1].toString();
-            this.status_dice_3 = round.attack.resultRound[2].toString();
-        }
-
-        if (this.actionType === 'defese') {
-            this.status_dice_1 = round.defese.resultRound[2].toString();
-            this.status_dice_2 = round.defese.resultRound[1].toString();
-            this.status_dice_3 = round.defese.resultRound[0].toString();
-        }
+        this.status_dice_1 = round[this.actionType].resultRound[0].toString();
+        this.status_dice_2 = round[this.actionType].resultRound[1].toString();
+        this.status_dice_3 = round[this.actionType].resultRound[2].toString();
     }
 
     resetTable() {

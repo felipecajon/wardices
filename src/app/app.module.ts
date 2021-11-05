@@ -7,12 +7,14 @@ import { MainTableComponent } from './modules/main-table/main-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActionComponent } from './modules/main-table/action/action.component';
 import { IconsModule } from './components/icons/icons.module';
+import { DiceComponent } from './modules/main-table/dice/dice.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainTableComponent,
     ActionComponent,
+    DiceComponent,
   ],
   imports: [
     BrowserModule,

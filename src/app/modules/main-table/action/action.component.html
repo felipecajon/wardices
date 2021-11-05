@@ -1,46 +1,26 @@
-<div class="box-container-action">
-    <p>
-        Action: {{actionType}}
-    </p>
-
+<div class="box-container-action {{actionType}}">
     <div class="box-dices">
         <div class="d-flex justify-content-center align-items-center h-100">
-            <div class="box-dice">
-                <img [src]="dice_1" class="responsive-image mx-2" style="max-width: 40px;" width="72" height="72" alt="">
+              <app-dice *ngIf="actionType === 'defese'" [index]="1" [dice_face]="dice_1" [status_dice]="status_dice_1" [hasDice]="hasDice_1"></app-dice>
+              <app-dice *ngIf="actionType === 'attack'" [index]="3" [dice_face]="dice_3" [status_dice]="status_dice_3" [hasDice]="true"></app-dice>
 
-                <span class="text-danger d-none" [class.d-block]="status_dice_1 === 'false'">
-                    <app-close size="24"></app-close>
-                </span>
-            </div>
+              <app-dice [index]="2" [dice_face]="dice_2" [status_dice]="status_dice_2" [hasDice]="hasDice_2"></app-dice>
 
-            <div class="box-dice" [class.d-none]="hasDice_2 === false">
-                <img [src]="dice_2" class="responsive-image mx-2" style="max-width: 40px;" width="72" height="72" alt="">
-
-                <span class="text-danger d-none" [class.d-block]="status_dice_2 === 'false'">
-                    <app-close size="24"></app-close>
-                </span>
-            </div>
-
-            <div class="box-dice" [class.d-none]="hasDice_3 === false">
-                <img [src]="dice_3" class="responsive-image mx-2" style="max-width: 40px;" width="72" height="72" alt="">
-
-                <span class="text-danger d-none" [class.d-block]="status_dice_3 === 'false'">
-                    <app-close size="24"></app-close>
-                </span>
-            </div>
+              <app-dice *ngIf="actionType === 'defese'" [index]="3" [dice_face]="dice_3" [status_dice]="status_dice_3" [hasDice]="true"></app-dice>
+              <app-dice *ngIf="actionType === 'attack'" [index]="1" [dice_face]="dice_1" [status_dice]="status_dice_1" [hasDice]="hasDice_1"></app-dice>
         </div>
     </div>
 
     <div class="dice-qty">
-        <div (click)="setDices(1)">1</div>
-        <div (click)="setDices(2)">2</div>
-        <div (click)="setDices(3)">3</div>
+        <button class="btn btn-primary" (click)="setDices(1)">1</button>
+        <button class="btn btn-primary" (click)="setDices(2)">2</button>
+        <button class="btn btn-primary" (click)="setDices(3)">3</button>
     </div>
 
     <div class="box-action">
         <button class="btn btn-primary btn-block" (click)="handlerRollDices(actionType)" [disabled]="isDisabledButton"
             style="min-height: 50px;">
-            {{actionType === 'attack' ? 'Atacar' : 'Defesa'}}
+            {{actionType === 'attack' ? 'Atacar' : 'Defender'}}
         </button>
     </div>
 </div>

@@ -16,6 +16,7 @@ import { FightComponent } from './fight/fight.component';
 import { EqualComponent } from './equal/equal.component';
 import { RefreshComponent } from './refresh/refresh.component';
 import { CloseComponent } from './close/close.component';
+import { CleanComponent } from './clean/clean.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CloseComponent } from './close/close.component';
     FightComponent,
     EqualComponent,
     RefreshComponent,
-    CloseComponent
+    CloseComponent,
+    CleanComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { CloseComponent } from './close/close.component';
     FightComponent,
     EqualComponent,
     RefreshComponent,
-    CloseComponent
+    CloseComponent,
+    CleanComponent
   ]
 })
 

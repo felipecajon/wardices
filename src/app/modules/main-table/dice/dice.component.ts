@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MainTableService } from '../main-table.service';
 
 @Component({
   selector: 'app-dice',
@@ -10,12 +11,32 @@ export class DiceComponent implements OnInit {
 
   @Input() index! : Number;
   @Input() hasDice! : Boolean;
-  @Input() dice_face! : String;
-  @Input() status_dice! : String;
+  @Input() value! : Number;
+  @Input() isDestroyed!: Boolean;
+  @Input() actionType!: string;
 
-  constructor() { }
+  isAbleToReRoll: Boolean = false;
+
+  constructor(private tableService: MainTableService) { }
 
   ngOnInit(): void {
+    this.tableService.testDices$.subscribe(e => this.testDices());
+    this.tableService.resetTable$.subscribe(e => this.resetTable());
   }
 
+  ableReRoll () {
+    this.isAbleToReRoll = !this.isAbleToReRoll;
+    const config = {index: this.index, actionType: this.actionType};
+    this.tableService.ableReRoll(config);
+  }
+
+  testDices() {
+    this.resetTable();
+  }
+
+  resetTable () {
+    if (this.isAbleToReRoll) {
+      this.isAbleToReRoll = false;
+    }
+  }
 }

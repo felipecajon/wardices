@@ -1,7 +1,18 @@
-<div class="box-dice" [class.d-none]="hasDice === false">
-    <img [src]="dice_face" class="responsive-image mx-2" width="72" height="72" alt="">
+<div class="box-dice" [class.d-none]="hasDice === false" [attr.data-index]="index">
 
-    <span class="text-white d-none" [class.d-block]="status_dice === 'false'">
-        <app-close size="30"></app-close>
-    </span>
+
+  <span class="dice-type {{actionType}}" (click)="ableReRoll()" [class.glowDice]="isAbleToReRoll">
+    <span class="background unclicable"></span>
+    <app-dice0 size="70" *ngIf="value === 0"></app-dice0>
+    <app-dice1 size="70" *ngIf="value === 1"></app-dice1>
+    <app-dice2 size="70" *ngIf="value === 2"></app-dice2>
+    <app-dice3 size="70" *ngIf="value === 3"></app-dice3>
+    <app-dice4 size="70" *ngIf="value === 4"></app-dice4>
+    <app-dice5 size="70" *ngIf="value === 5"></app-dice5>
+    <app-dice6 size="70" *ngIf="value === 6"></app-dice6>
+  </span>
+
+  <span class="icon-destroyed text-white unclicable d-none" [class.d-block]="isDestroyed === false">
+    <app-close size="30"></app-close>
+  </span>
 </div>

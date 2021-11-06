@@ -1,13 +1,13 @@
 <div class="box-container-action {{actionType}}">
-    <div class="box-dices">
-        <div class="d-flex justify-content-center align-items-center h-100">
-              <app-dice *ngIf="actionType === 'defese'" [index]="1" [dice_face]="dice_1" [status_dice]="status_dice_1" [hasDice]="hasDice_1"></app-dice>
-              <app-dice *ngIf="actionType === 'attack'" [index]="3" [dice_face]="dice_3" [status_dice]="status_dice_3" [hasDice]="true"></app-dice>
+    <div class="box-dices w-100">
+        <div class="container-dices">
+              <app-dice *ngIf="actionType === 'attack'" [actionType]="actionType" [index]="2" [value]="dicesValues[2]" [isDestroyed]="statusDices[2]" [hasDice]="true"></app-dice>
+              <app-dice *ngIf="actionType === 'defese'" [actionType]="actionType" [index]="0" [value]="dicesValues[0]" [isDestroyed]="statusDices[0]" [hasDice]="qtyDices === 3"></app-dice>
 
-              <app-dice [index]="2" [dice_face]="dice_2" [status_dice]="status_dice_2" [hasDice]="hasDice_2"></app-dice>
+              <app-dice [actionType]="actionType" [index]="1" [value]="dicesValues[1]" [isDestroyed]="statusDices[1]" [hasDice]="qtyDices >= 2"></app-dice>
 
-              <app-dice *ngIf="actionType === 'defese'" [index]="3" [dice_face]="dice_3" [status_dice]="status_dice_3" [hasDice]="true"></app-dice>
-              <app-dice *ngIf="actionType === 'attack'" [index]="1" [dice_face]="dice_1" [status_dice]="status_dice_1" [hasDice]="hasDice_1"></app-dice>
+              <app-dice *ngIf="actionType === 'defese'" [actionType]="actionType" [index]="2" [value]="dicesValues[2]" [isDestroyed]="statusDices[2]" [hasDice]="true"></app-dice>
+              <app-dice *ngIf="actionType === 'attack'" [actionType]="actionType" [index]="0" [value]="dicesValues[0]" [isDestroyed]="statusDices[0]" [hasDice]="qtyDices === 3"></app-dice>
         </div>
     </div>
 
@@ -18,9 +18,18 @@
     </div>
 
     <div class="box-action">
-        <button class="btn btn-primary btn-block" (click)="handlerRollDices(actionType)" [disabled]="isDisabledButton"
-            style="min-height: 50px;">
+        <button class="btn btn-primary d-flex justify-content-between align-items-center w-100" (click)="handlerRollDices()" [disabled]="isDisabledButton" style="min-height: 50px;">
+
+          <span *ngIf="actionType === 'attack'" class="rotate-y-180"><app-sword size="30"></app-sword></span>
+          <span *ngIf="actionType === 'defese'" class=""><app-shield size="30"></app-shield></span>
+
+          <strong>
             {{actionType === 'attack' ? 'Atacar' : 'Defender'}}
+          </strong>
+
+          <span *ngIf="actionType === 'attack'" class=""><app-sword size="30"></app-sword></span>
+          <span *ngIf="actionType === 'defese'" class=""><app-shield size="30"></app-shield></span>
+
         </button>
     </div>
 </div>

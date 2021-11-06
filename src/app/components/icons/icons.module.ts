@@ -17,6 +17,16 @@ import { EqualComponent } from './equal/equal.component';
 import { RefreshComponent } from './refresh/refresh.component';
 import { CloseComponent } from './close/close.component';
 import { CleanComponent } from './clean/clean.component';
+import { Dice1Component } from './dice1/dice1.component';
+import { Dice2Component } from './dice2/dice2.component';
+import { Dice3Component } from './dice3/dice3.component';
+import { Dice4Component } from './dice4/dice4.component';
+import { Dice5Component } from './dice5/dice5.component';
+import { Dice6Component } from './dice6/dice6.component';
+import { Dice0Component } from './dice0/dice0.component';
+import { Symbol1Component } from './symbol1/symbol1.component';
+import { SwordComponent } from './sword/sword.component';
+import { ShieldComponent } from './shield/shield.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +46,17 @@ import { CleanComponent } from './clean/clean.component';
     EqualComponent,
     RefreshComponent,
     CloseComponent,
-    CleanComponent
+    CleanComponent,
+    Dice0Component,
+    Dice1Component,
+    Dice2Component,
+    Dice3Component,
+    Dice4Component,
+    Dice5Component,
+    Dice6Component,
+    Symbol1Component,
+    SwordComponent,
+    ShieldComponent,
   ],
   imports: [
     CommonModule,
@@ -58,7 +78,17 @@ import { CleanComponent } from './clean/clean.component';
     EqualComponent,
     RefreshComponent,
     CloseComponent,
-    CleanComponent
+    CleanComponent,
+    Dice0Component,
+    Dice1Component,
+    Dice2Component,
+    Dice3Component,
+    Dice4Component,
+    Dice5Component,
+    Dice6Component,
+    Symbol1Component,
+    SwordComponent,
+    ShieldComponent,
   ]
 })
 

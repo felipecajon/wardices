@@ -2,9 +2,12 @@
   width: 100%;
   height: 100vh;
   transition: .5s all ease-in-out;
-  background-image: url(../../assets/images/download.jpeg.png);
+  background-image: url(../../assets/images/viking.png);
+  background-blend-mode: hard-light;
+  background-color: #ffe7af;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 50%;
+  background-position: center;
 
   &.inverted {
     transform: rotate(180deg);
@@ -51,12 +54,27 @@
   .box-dices {
     position: absolute;
     top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 0%;
+    transform: translateY(-50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 80px;
+    background-color: #333;;
+
+    .container-dices {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 60vw;
+    }
   }
 
 	.box-dice {
 		position: relative;
+    width: 100px;
 
 		span {
 			position: absolute;
@@ -65,21 +83,56 @@
 			transform: translate(-50%, -50%);
 		}
 
-    img {
-      border-radius: 10px;
-      max-width: 55px;
+    .icon-destroyed {
+    }
+
+    .background {
+      background: #333;
+      width: 80%;
+      height: 80%;
+    }
+
+    svg {
+      position: relative;
+    }
+
+    $red: #df2020;
+    $yellow: #d5d534;
+
+    .dice-type {
+      &.defese {
+        color: $yellow;
+      }
+
+      &.attack {
+        color: $red;
+      }
     }
 	}
+}
 
-	&.defese {
-		img {
-			background: #d5d534;
-		}
-	}
+.glowDice.attack .background{
+  -webkit-box-shadow:0px 0px 29px 9px rgba(red($red),green($red),blue($red),0.69);
+  -moz-box-shadow: 0px 0px 29px 9px rgba(red($red),green($red),blue($red),0.69);
+  box-shadow: 0px 0px 29px 9px rgba(red($red),green($red),blue($red),0.69);
+}
 
-	&.attack {
-		img {
-			background: #df2020;
-		}
-	}
+.glowDice.defese .background{
+  -webkit-box-shadow:0px 0px 29px 9px rgba(red($yellow),green($yellow),blue($yellow),0.69);
+  -moz-box-shadow: 0px 0px 29px 9px rgba(red($yellow),green($yellow),blue($yellow),0.69);
+  box-shadow: 0px 0px 29px 9px rgba(red($yellow),green($yellow),blue($yellow),0.69);
+}
+
+.glowDice {
+  &.attack {
+    -webkit-box-shadow:0px 0px 29px 9px rgba(red($red),green($red),blue($red),0.69);
+    -moz-box-shadow: 0px 0px 29px 9px rgba(red($red),green($red),blue($red),0.69);
+    box-shadow: 0px 0px 29px 9px rgba(red($red),green($red),blue($red),0.69);
+  }
+
+  &.defese {
+    -webkit-box-shadow:0px 0px 29px 9px rgba(red($yellow),green($yellow),blue($yellow),0.69);
+    -moz-box-shadow: 0px 0px 29px 9px rgba(red($yellow),green($yellow),blue($yellow),0.69);
+    box-shadow: 0px 0px 29px 9px rgba(red($yellow),green($yellow),blue($yellow),0.69);
+  }
 }

@@ -1,122 +1,165 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
+  dice_face_0,
+  dice_face_1,
+  dice_face_2,
+  dice_face_3,
+  dice_face_4,
+  dice_face_5,
+  dice_face_6,
+} from 'src/app/constants';
+import { MainTableService } from '../main-table.service';
+
+@Component({
+  selector: 'app-action',
+  templateUrl: './action.component.html',
+  styleUrls: ['./action.component.scss'],
+})
+export class ActionComponent implements OnInit {
+  @Input() actionType!: string;
+
+  diceFacesLib: Array<string> = [
     dice_face_0,
     dice_face_1,
     dice_face_2,
     dice_face_3,
     dice_face_4,
     dice_face_5,
-    dice_face_6
-} from 'src/app/constants';
-import {MainTableService} from '../main-table.service';
+    dice_face_6,
+  ];
 
-@Component({selector: 'app-action', templateUrl: './action.component.html', styleUrls: ['./action.component.scss']})
+  isDisabledButton: boolean = false;
+  dicesFaces: Array<String> = [dice_face_0, dice_face_0, dice_face_0];
+  dicesValues: Array<Number> = [0, 0, 0];
+  statusDices: Array<Boolean> = [true, true, true];
+  qtyDices: Number = 3;
+  isReRoll: Boolean = false;
+  indexToReRoll: Array<Number> = [];
 
-export class ActionComponent implements OnInit {
-    @Input()actionType !: string;
-    isDisabledButton : boolean = false;
+  constructor(private tableService: MainTableService) {}
 
+  ngOnInit(): void {
+    this.tableService.resetTable$.subscribe((e) => this.resetTable());
+    this.tableService.testDices$.subscribe((e) => this.testDices(e));
+    this.tableService.ableReRoll$.subscribe((e) => this.ableReRoll(e));
+  }
 
-    hasDice_1 : boolean = true;
-    hasDice_2 : boolean = true;
+  handlerRollDices() {
+    const _this = this;
+    let x = 0;
+    this.isDisabledButton = true;
 
-    dice_1 : string = dice_face_0;
-    dice_2 : string = dice_face_0;
-    dice_3 : string = dice_face_0;
+    const intervalID = setInterval(() => {
+      const isLastLoop = ++x === 8;
+      _this.rollDices({ isLastLoop });
 
-    status_dice_1 : string = '';
-    status_dice_2 : string = '';
-    status_dice_3 : string = '';
-    qtyDices : Number = 3;
+      if (isLastLoop) {
+        window.clearInterval(intervalID);
+      }
+    }, 100);
+  }
 
-    diceFace : Array < string > = [
-        dice_face_1,
-        dice_face_2,
-        dice_face_3,
-        dice_face_4,
-        dice_face_5,
-        dice_face_6
-    ];
+  getRandomNumber(): number {
+    let randomNumber = Math.floor(Math.random() * 6) + 1;
+    return randomNumber !== 0 && randomNumber < 7 ? randomNumber : this.getRandomNumber();
+  }
 
-    constructor(private tableService : MainTableService) {}
+  rollDices({ isLastLoop }: any) {
+    let dice_1:any = this.dicesValues[0];
+    let dice_2:any = this.dicesValues[1];
+    let dice_3:any = this.dicesValues[2];
 
-    ngOnInit(): void {
-        this.tableService.resetTable$.subscribe(e => this.resetTable());
-        this.tableService.testDices$.subscribe(e => this.testDices(e));
-        this.actionType === 'defese' && this.tableService.ableDefese$.subscribe(e => this.ableDefese());
-        this.isDisabledButton = this.actionType !== 'attack';
+    if (this.isReRoll) {
+      this.indexToReRoll.forEach(e => {
+        switch (e) {
+          case 0:
+            dice_1 = this.getRandomNumber();
+            break;
+
+          case 1:
+            dice_2 = this.getRandomNumber();
+            break;
+
+          case 2:
+            dice_3 = this.getRandomNumber();
+            break;
+        };
+      });
+    } else {
+      dice_1 = this.qtyDices === 3 ? this.getRandomNumber() : this.dicesValues[0];
+      dice_2 = this.qtyDices >= 2 ? this.getRandomNumber() : this.dicesValues[1];
+      dice_3 = this.getRandomNumber();
     }
 
-    handlerRollDices(actionType : string) {
-        const _this = this;
-        let x = 0;
-        this.isDisabledButton = true;
+    this.dicesValues = this.isReRoll ? [dice_1, dice_2, dice_3] : [dice_1, dice_2, dice_3].sort();
 
-        const intervalID = setInterval(() => {
-            const lastLoop = ++ x === 8;
-            _this.rollDices({last: lastLoop});
+    dice_1 = this.dicesValues[0];
+    dice_2 = this.dicesValues[1];
+    dice_3 = this.dicesValues[2];
 
-            if (lastLoop) {
-                window.clearInterval(intervalID);
-            }
-        }, 100);
+    this.dicesFaces = [ this.diceFacesLib[dice_1], this.diceFacesLib[dice_2], this.diceFacesLib[dice_3] ];
+
+    if (isLastLoop) {
+      this.tableService.testDices({
+        actionType: this.actionType,
+        diceValues: this.dicesValues,
+        qtyDices: this.qtyDices,
+        isReRoll: this.isReRoll
+      });
+    }
+  }
+
+  setDices(qty: Number) {
+    this.qtyDices = qty;
+  }
+
+  testDices(round: any) {
+    if ( this.actionType === 'defese' && round.defese.round ) {
+      this.statusDices = round.defese.round;
     }
 
-    getRandomNumber(): number {
-        return Math.floor(Math.random() * 6) + 0;
+    if ( this.actionType === 'attack' && round.attack.round ) {
+      this.statusDices = round.attack.round;
     }
 
-    rollDices({last} : any) {
-        const result_1 = this.getRandomNumber();
-        const result_2 = this.getRandomNumber();
-        const result_3 = this.getRandomNumber();
-        let diceValues = [];
+    this.isDisabledButton = false;
+    this.indexToReRoll = [];
+    this.isReRoll = false;
+  }
 
-        diceValues.push(this.diceFace[result_1]);
-        diceValues.push(this.diceFace[result_2]);
-        diceValues.push(this.diceFace[result_3]);
+  resetTable() {
+    this.isDisabledButton = false;
+    this.dicesFaces = [dice_face_0, dice_face_0, dice_face_0];
+    this.dicesValues = [0, 0, 0];
+    this.statusDices = [true, true, true];
+  }
 
-        diceValues.sort();
+  ableDefese() {
+    // this.isDisabledButton = false;
+  }
 
-        this.dice_1 = diceValues[0];
-        this.dice_2 = diceValues[1];
-        this.dice_3 = diceValues[2];
+  ableReRoll(e: any) {
+    this.actionType === 'attack' && this.testingIndexToRoll(e.index);
+    this.actionType === 'defese' && this.testingIndexToRoll(e.index);
+  }
 
-        const mappedDices = [
-            result_1 + 1,
-            result_2 + 1,
-            result_3 + 1
-        ].sort();
+  testingIndexToRoll (index: Number) {
+    let indexToReRoll = this.indexToReRoll;
 
-        last && this.tableService.testDices({actionType: this.actionType, diceValues: mappedDices, qtyDices: this.qtyDices});
+    if (indexToReRoll.includes(index)) {
+      indexToReRoll = indexToReRoll.filter(e => e !== index)
+    } else {
+      indexToReRoll.push(index);
     }
 
-    setDices(qty : Number) {
-        this.hasDice_1 = qty === 3;
-        this.hasDice_2 = qty >= 2;
-        this.qtyDices = qty;
+    this.indexToReRoll = indexToReRoll;
+
+    if (this.indexToReRoll.length >= 1) {
+      // this.isDisabledButton = false;
+      this.isReRoll = true;
+    } else {
+      // this.isDisabledButton = true;
+      this.isReRoll = false;
     }
-
-    testDices(round : any) {
-        this.status_dice_1 = round[this.actionType].resultRound[0].toString();
-        this.status_dice_2 = round[this.actionType].resultRound[1].toString();
-        this.status_dice_3 = round[this.actionType].resultRound[2].toString();
-    }
-
-    resetTable() {
-        this.dice_1 = dice_face_0;
-        this.dice_2 = dice_face_0;
-        this.dice_3 = dice_face_0;
-
-        this.status_dice_1 = '';
-        this.status_dice_2 = '';
-        this.status_dice_3 = '';
-
-        this.isDisabledButton = this.actionType !== 'attack';
-    }
-
-    ableDefese() {
-        this.isDisabledButton = false;
-    }
+  }
 }
-

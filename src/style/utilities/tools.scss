@@ -6,3 +6,15 @@
 .c-pointer {
     cursor: pointer;
 }
+
+.unclicable {
+  pointer-events: none;
+}
+
+.rotate {
+  &-y {
+    &-180 {
+      transform: rotateY(180deg);
+    }
+  }
+}
